@@ -6,28 +6,8 @@ const compression = require("compression");
 const file = require("fs");
 const { join } = require("path");
 
+const { page, getPages } = require('./Page.js');
 const JSONpages = require("./pages.json");
-
-class Page {
-    constructor(name, path, subPages = []) {
-        this.name = name;
-        this.path = path;
-        this.subpages = subPages;
-    }
-    publish(res) {
-        res.send(express.static(file.readFileSync.join(__dirname, path)))
-    }
-}
-
-function getPages(objects) {
-    var returnArray = [];
-    Array.from(objects ?? []).forEach(object => {
-        var subs = getPages(object.subPages);
-        returnArray += new Page(object.name, object.path, subs);
-    });
-    return returnArray;
-}
-
 var pages = getPages(JSONpages);
 
 require("dotenv").config();
@@ -41,7 +21,7 @@ app.use(compression());
 
 const httpsOptions = {
     key: file.readFileSync(join(__dirname, "certificates/domain.key")),
-    cert: file.readFileSync(join(__dirname, "certificates/domain.pem")),
+    cert: file.readFileSync(join(__dirname, "certificates/domain.pem"))
 };
 
 http.createServer(app).listen("3000", () => {
@@ -56,15 +36,22 @@ https.createServer(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
+app.use("/assets", express.static(join(__dirname, "Assets")));
+
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
-    let url = req.originalUrl.split("/").shift();
+    console.log(req.originalUrl)
+    let url = req.originalUrl.split("/");
+    url.shift();
+    console.log(url)
     if (host.length > 2) {
-        res.send("markregg.com")
+        res.send("markregg.com");
     } else {
         Array.from(pages ?? []).forEach(page => {
-            if ((url[0] ?? "home") == page.name) {
-                page.publish(res)
+            if ([(url[0] ?? "home").toLowerCase(), ""].includes(page.name)) {
+                if (url.length == 1 || (url.length == 2 && url[1] == "")) {
+                    page.publish(res);
+                }
             }
         });
     }
