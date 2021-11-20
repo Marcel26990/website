@@ -18,12 +18,12 @@ export default class Page {
         if (pages == []) {
             pages = JSONpages;
         }
-        var returnArray = [];
+        var output = [];
         Array.from(pages).forEach(object => {
             var subs = getPages(object.subPages) ?? [];
             let valueToAdd = new Page(object.name, object.path, subs);
             returnArray.push(valueToAdd);
         });
-        return returnArray;
+        return output;
     }
 }
