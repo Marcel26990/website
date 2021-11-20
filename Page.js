@@ -24,7 +24,7 @@ export default class Page {
         var output = [];
         console.log(pages);
         Array.from(pages).forEach(object => {
-            var subs = getPages(object.subPages) ?? [];
+            var subs = Page.getPages(object.subPages) ?? [];
             let valueToAdd = new Page(object.name, object.path, subs);
             output.push(valueToAdd);
         });
