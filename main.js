@@ -34,7 +34,7 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(join(__dirname, "assets")));
+app.use("/assets", express.static(new URL("assets", import.meta.url)));
 
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
