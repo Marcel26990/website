@@ -1,42 +1,40 @@
-const express = require("express");
-const http = require("http");
-const https = require("https");
-const helmet = require("helmet");
-const compression = require("compression");
-const file = require("fs");
-const { join } = require("path");
-
-const { page, getPages } = require('./Page.js');
-const JSONpages = require("./pages.json");
-var pages = getPages(JSONpages);
-
-require("dotenv").config();
+import express from 'express';
+import { createServer as createHTTPserver } from 'http';
+import { createServer as createHTTPSserver } from 'https';
+import helment from 'helment';
+import compression from 'compression';
+import files from 'fs';
+import join from 'path';
+import Page from 'Page.js';
+import exp from 'constants';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(helmet({ hidePoweredBy: true }));
+app.use(helment({ hidePoweredBy: true }));
 app.use(compression());
 
 const httpsOptions = {
-    key: file.readFileSync(join(__dirname, "certificates/domain.key")),
-    cert: file.readFileSync(join(__dirname, "certificates/domain.pem"))
+    key: files.readFileSync(join(__dirname, "certificates/domain.key")),
+    cert: files.readFileSync(join(__dirname, "certificates/domain.pem"))
 };
 
-http.createServer(app).listen("3000", () => {
+createHTTPserver(app).listen("3000", () => {
     console.log("Listening via HTTP on Port:", "3000");
 });
 
-http.createServer(app).listen(process.env.httpPort, () => {
+createHTTPserver(app).listen(process.env.httpPort, () => {
     console.log("Listening via HTTP on Port:", process.env.httpPort);
 });
 
-https.createServer(httpsOptions, app).listen(process.env.httpsPort, () => {
+createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(join(__dirname, "Assets")));
+app.use("/assets", express.static(join(__dirname, "assets")));
 
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
@@ -47,8 +45,8 @@ app.get("*", (req, res, next) => {
     if (host.length > 2) {
         res.send("markregg.com");
     } else {
-        Array.from(pages ?? []).forEach(page => {
-            if ([(url[0] ?? "home").toLowerCase(), ""].includes(page.name)) {
+        Array.from(Page ?? []).forEach(page => {
+            if ((url[0] == "" ? "home" : url[0] ?? "home").toLowerCase() == page.name) {
                 if (url.length == 1 || (url.length == 2 && url[1] == "")) {
                     page.publish(res);
                 }

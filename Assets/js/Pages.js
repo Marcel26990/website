@@ -1,14 +1,12 @@
-const { page, getPages } = require('./Page.js.js.js');
-const JSONpages = require("./pages.json");
-var pages = getPages(JSONpages);
+import getPages from './Page.js';
 
 function displayPages(pages) {
     var returnHTML = "";
-    Array.from(pages).forEach(page => {
+    Array.from(getPages()).forEach(page => {
         returnHTML += ```
-            <div id="page">
-                <h1>${page.name}</h1>
-                <b>${page.path}</b>
+<div id="page">
+    <h1>${page.name}</h1>
+    <b>${page.path}</b>
         ```;
         if (pages.subPages.length > 0) {
             displayPages(page.subPages);
@@ -16,9 +14,8 @@ function displayPages(pages) {
             returnHTML += `</div>`
         }
     });
+    console.log("Function called!");
     return returnHTML;
 }
 
-document.getElementById('listOfPages').innerHTML = displayPages(pages);
-
-console.log("Check!");
+console.log("File called!");

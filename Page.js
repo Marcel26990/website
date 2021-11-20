@@ -1,7 +1,7 @@
-const file = require("fs");
-const { join } = require("path");
+import { join } from "path";
+import JSONpages from "./pages.json";
 
-class Page {
+export default class Page {
     constructor(name, path, subPages = []) {
         this.name = name;
         this.path = path;
@@ -11,19 +11,17 @@ class Page {
     publish(res) {
         res.sendFile(join(__dirname, this.path))
     }
-}
-
-function getPages(objects) {
-    var returnArray = [];
-    Array.from(objects ?? []).forEach(object => {
-        var subs = getPages(object.subPages) ?? [];
-        let valueToAdd = new Page(object.name, object.path, subs);
-        returnArray.push(valueToAdd);
-    });
-    return returnArray;
-}
-
-module.exports = {
-    Page,
-    getPages
+    
+    static getPages(pages = []) {
+        if (pages == []) {
+            pages = JSONpages;
+        }
+        var returnArray = [];
+        Array.from(pages ?? []).forEach(object => {
+            var subs = getPages(object.subPages) ?? [];
+            let valueToAdd = new Page(object.name, object.path, subs);
+            returnArray.push(valueToAdd);
+        });
+        return returnArray;
+    }
 }

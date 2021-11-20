@@ -1,10 +1,10 @@
 [
     {
-        "name" : "home",
-        "path" : "Home/Home.html"
+        "name": "home",
+        "path": "Home/Home.html"
     },
     {
-        "name" : "pages",
-        "path" : "Home/Pages.html"
+        "name": "pages",
+        "path": "Home/Pages.html"
     }
 ]
