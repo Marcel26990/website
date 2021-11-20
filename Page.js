@@ -11,7 +11,7 @@ export default class Page {
     }
     
     publish(res) {
-        res.sendFile(path.join(__dirname, this.path))
+        res.sendFile(path.join(__dirname, this.path));
     }
     
     static getPages(pages = []) {
