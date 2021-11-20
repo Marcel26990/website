@@ -36,21 +36,20 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(path.join(__dirname, "assets")));
-
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
     console.log(req.originalUrl);
     let url = req.originalUrl.split("/");
     url.shift();
     console.log(url);
+    if (url.toString().startsWith('/assets')) {
+        next();
+    }
     if (host.length > 2) {
         res.send("markregg.com");
     } else {
-        console.log("else");
         const pages = Page.getPages();
         pages.forEach(page => {
-            console.log("A", page);
             if ((url[0] == "" ? "home" : url[0] ?? "home").toLowerCase() == page.name) {
                 if (url.length == 1 || (url.length == 2 && url[1] == "")) {
                     page.publish(res);
@@ -59,6 +58,8 @@ app.get("*", (req, res, next) => {
         });
     }
 });
+
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use((req, res) => {
     res.status(404).send("404, Not found!");

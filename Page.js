@@ -15,16 +15,11 @@ export default class Page {
     }
     
     static getPages(pages = []) {
-        console.log("1", pages);
-        console.log("2", JSONpages);
         if (Array.from(pages).length == 0) {
-            console.log("3", JSONpages);
             pages = JSONpages;
         }
         var output = [];
-        console.log("4", pages);
         Array.from(pages).forEach(object => {
-            console.log("Object", object);
             var subs;
             if (object.subPages == [] || object.subPages == undefined || object.subPages == null) {
                 subs = [];
@@ -34,7 +29,6 @@ export default class Page {
             let valueToAdd = new Page(object.name, object.path, subs);
             output.push(valueToAdd);
         });
-        console.log("5", output);
         return output;
     }
 }
