@@ -1,8 +1,8 @@
-import Pages from '../../Page.js';
+import Page from '../Page.js';
 
 function displayPages(pages) {
     var output = "";
-    Pages.getPages().forEach(page => {
+    Page.getPages().forEach(page => {
         output += `
 <div id="page">
     <h1>${page.name}</h1>

@@ -36,16 +36,18 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
+app.use("/assets", express.static(path.join(__dirname, "assets")));
+
 app.get("*", (req, res, next) => {
+    
     let host = req.get("host").split(".");
     console.log(req.originalUrl);
+    
     let url = req.originalUrl.split("/");
     url.shift();
     console.log(url);
-    if (url.toString().startsWith('/assets')) {
-        app.use("/assets", express.static(path.join(__dirname, "assets")));
-        return;
-    } else if (host.length > 2) {
+    
+    if (host.length > 2) {
         res.send("markregg.com");
     } else {
         const pages = Page.getPages();
