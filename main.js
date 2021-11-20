@@ -36,8 +36,6 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(path.join(__dirname, "assets")));
-
 app.get("*", (req, res, next) => {
     
     let host = req.get("host").split(".");
@@ -60,6 +58,8 @@ app.get("*", (req, res, next) => {
         });
     }
 });
+
+app.use("/assets", express.static(path.join(__dirname, "/assets")));
 
 app.use((req, res) => {
     res.status(404).send("404, Not found!");
