@@ -20,6 +20,7 @@ export default class Page {
             pages = JSONpages;
         }
         var output = [];
+        console.log(pages);
         Array.from(pages).forEach(object => {
             var subs = getPages(object.subPages) ?? [];
             let valueToAdd = new Page(object.name, object.path, subs);
