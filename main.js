@@ -48,7 +48,8 @@ app.get("*", (req, res, next) => {
         res.send("markregg.com");
     } else {
         console.log("else");
-        Page.getPages().forEach(page => {
+        const pages = Page.getPages();
+        pages.forEach(page => {
             console.log("A", page);
             if ((url[0] == "" ? "home" : url[0] ?? "home").toLowerCase() == page.name) {
                 if (url.length == 1 || (url.length == 2 && url[1] == "")) {
