@@ -22,7 +22,7 @@ export default class Page {
         Array.from(pages).forEach(object => {
             var subs = getPages(object.subPages) ?? [];
             let valueToAdd = new Page(object.name, object.path, subs);
-            returnArray.push(valueToAdd);
+            output.push(valueToAdd);
         });
         return output;
     }
