@@ -1,4 +1,4 @@
-[
+export default [
     {
         "name": "home",
         "path": "Home/Home.html"

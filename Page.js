@@ -1,5 +1,5 @@
 import { join } from "path";
-import JSONpages from "./pages.json";
+import JSONpages from "./pages.js";
 
 export default class Page {
     constructor(name, path, subPages = []) {
