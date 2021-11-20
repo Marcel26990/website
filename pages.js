@@ -7,4 +7,4 @@ export default [
         "name": "pages",
         "path": "Home/Pages.html"
     }
-]
+];
