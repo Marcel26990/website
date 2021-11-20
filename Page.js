@@ -15,20 +15,20 @@ export default class Page {
     }
     
     static getPages(pages = []) {
-        console.log(pages);
-        console.log(JSONpages);
+        console.log("1", pages);
+        console.log("2", JSONpages);
         if (Array.from(pages).length == 0) {
-            console.log(JSONpages);
+            console.log("3", SONpages);
             pages = JSONpages;
         }
         var output = [];
-        console.log(pages);
+        console.log("4", pages);
         Array.from(pages).forEach(object => {
             var subs = Page.getPages(object.subPages) ?? [];
             let valueToAdd = new Page(object.name, object.path, subs);
             output.push(valueToAdd);
         });
-        console.log(output);
+        console.log("5", output);
         return output;
     }
 }
