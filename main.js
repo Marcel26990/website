@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer as createHTTPserver } from 'http';
 import { createServer as createHTTPSserver } from 'https';
-import helment from 'helment';
+import helmet from 'helmet';
 import compression from 'compression';
 import files from 'fs';
 import join from 'path';
@@ -14,7 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(helment({ hidePoweredBy: true }));
+app.use(helmet({ hidePoweredBy: true }));
 app.use(compression());
 
 const httpsOptions = {
