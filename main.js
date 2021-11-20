@@ -43,9 +43,9 @@ app.get("*", (req, res, next) => {
     url.shift();
     console.log(url);
     if (url.toString().startsWith('/assets')) {
-        next();
-    }
-    if (host.length > 2) {
+        app.use("/assets", express.static(path.join(__dirname, "assets")));
+        return;
+    } else if (host.length > 2) {
         res.send("markregg.com");
     } else {
         const pages = Page.getPages();
@@ -58,8 +58,6 @@ app.get("*", (req, res, next) => {
         });
     }
 });
-
-app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use((req, res) => {
     res.status(404).send("404, Not found!");
