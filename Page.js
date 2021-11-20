@@ -17,6 +17,7 @@ export default class Page {
     static getPages(pages = []) {
         console.log("Get pages");
         if (pages == []) {
+            console.log(JSONpages);
             pages = JSONpages;
         }
         var output = [];
