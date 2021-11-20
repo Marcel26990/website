@@ -40,14 +40,15 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
-    console.log(req.originalUrl)
+    console.log(req.originalUrl);
     let url = req.originalUrl.split("/");
     url.shift();
-    console.log(url)
+    console.log(url);
     if (host.length > 2) {
         res.send("markregg.com");
     } else {
         Page.getPages().forEach(page => {
+            console.log(page);
             if ((url[0] == "" ? "home" : url[0] ?? "home").toLowerCase() == page.name) {
                 if (url.length == 1 || (url.length == 2 && url[1] == "")) {
                     page.publish(res);

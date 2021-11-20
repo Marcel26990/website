@@ -15,6 +15,7 @@ export default class Page {
     }
     
     static getPages(pages = []) {
+        console.log("Get pages");
         if (pages == []) {
             pages = JSONpages;
         }
@@ -24,6 +25,7 @@ export default class Page {
             let valueToAdd = new Page(object.name, object.path, subs);
             output.push(valueToAdd);
         });
+        console.log(output);
         return output;
     }
 }
