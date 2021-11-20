@@ -17,9 +17,11 @@ app.use(express.json());
 app.use(helmet({ hidePoweredBy: true }));
 app.use(compression());
 
+const directory = import.meta.url;
+
 const httpsOptions = {
-    key: files.readFileSync(join(__dirname, "certificates/domain.key")),
-    cert: files.readFileSync(join(__dirname, "certificates/domain.pem"))
+    key: files.readFileSync(new URL("certificates/domain.key", directory)),
+    cert: files.readFileSync(new URL("certificates/domain.pem", directory))
 };
 
 createHTTPserver(app).listen("3000", () => {
@@ -34,7 +36,7 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(new URL("assets", import.meta.url)));
+app.use("/assets", express.static(new URL("assets", directory)));
 
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
