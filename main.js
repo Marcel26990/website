@@ -4,11 +4,13 @@ import { createServer as createHTTPSserver } from 'https';
 import helmet from 'helmet';
 import compression from 'compression';
 import files from 'fs';
-import join from 'path';
+import path from 'path';
 import Pages from './Page.js';
 import exp from 'constants';
 import dotenv from 'dotenv';
 dotenv.config();
+
+const __dirname = path.resolve();
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -17,11 +19,9 @@ app.use(express.json());
 app.use(helmet({ hidePoweredBy: true }));
 app.use(compression());
 
-const directory = import.meta.url;
-
 const httpsOptions = {
-    key: files.readFileSync(new URL("certificates/domain.key", directory)),
-    cert: files.readFileSync(new URL("certificates/domain.pem", directory))
+    key: files.readFileSync(path.join(__dirname, "certificates/domain.key")),
+    cert: files.readFileSync(path.join(__dirname, "certificates/domain.pem"))
 };
 
 createHTTPserver(app).listen("3000", () => {
@@ -36,7 +36,7 @@ createHTTPSserver(httpsOptions, app).listen(process.env.httpsPort, () => {
     console.log("Listening via HTTPS on Port:", process.env.httpsPort);
 });
 
-app.use("/assets", express.static(new URL("assets", directory)));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.get("*", (req, res, next) => {
     let host = req.get("host").split(".");
