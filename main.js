@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import files from 'fs';
 import join from 'path';
-import Page from 'Page.js';
+import Pages from './Page.js';
 import exp from 'constants';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -45,7 +45,7 @@ app.get("*", (req, res, next) => {
     if (host.length > 2) {
         res.send("markregg.com");
     } else {
-        Array.from(Page ?? []).forEach(page => {
+        Array.from(Pages ?? []).forEach(page => {
             if ((url[0] == "" ? "home" : url[0] ?? "home").toLowerCase() == page.name) {
                 if (url.length == 1 || (url.length == 2 && url[1] == "")) {
                     page.publish(res);
