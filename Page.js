@@ -18,7 +18,7 @@ export default class Page {
         console.log("1", pages);
         console.log("2", JSONpages);
         if (Array.from(pages).length == 0) {
-            console.log("3", SONpages);
+            console.log("3", JSONpages);
             pages = JSONpages;
         }
         var output = [];
