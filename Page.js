@@ -25,7 +25,12 @@ export default class Page {
         console.log("4", pages);
         Array.from(pages).forEach(object => {
             console.log("Object", object);
-            var subs = Page.getPages(object.subPages) ?? [];
+            var subs;
+            if (object.subPages == [] || object.subPages == undefined || object.subPages == null) {
+                subs = [];
+            } else {
+                subs = Page.getPages(object.subPages)
+            }
             let valueToAdd = new Page(object.name, object.path, subs);
             output.push(valueToAdd);
         });
