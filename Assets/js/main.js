@@ -45,6 +45,10 @@ app.get("*", (req, res, next) => {
     url.shift();
     console.log(url);
     
+    if (url[0] == "assets") {
+        next();
+    }
+    
     if (host.length > 2) {
         res.send("markregg.com");
     } else {
@@ -59,7 +63,7 @@ app.get("*", (req, res, next) => {
     }
 });
 
-app.use("/assets", express.static(path.join(__dirname, "/assets")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use((req, res) => {
     res.status(404).send("404, Not found!");
