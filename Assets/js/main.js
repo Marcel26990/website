@@ -46,6 +46,7 @@ app.get("*", (req, res, next) => {
     console.log(url);
     
     if (url[0] == "assets") {
+        express.static(path.join(__dirname, "assets"))
         next();
     }
     
