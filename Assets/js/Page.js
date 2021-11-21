@@ -1,5 +1,5 @@
 import path from "path";
-import JSONpages from "./pages.js";
+import JSONpages from "./index.js";
 
 const __dirname = path.resolve();
 

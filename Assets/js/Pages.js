@@ -1,4 +1,4 @@
-import Page from '../../Page.js';
+import Page from './Page.js';
 
 function displayPages(pages) {
     console.log("Function called!");
