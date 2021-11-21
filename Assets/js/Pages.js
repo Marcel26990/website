@@ -1,4 +1,4 @@
-import Page from './Page.js';
+import Page from 'assets/js/Page.js';
 
 function displayPages(pages) {
     var output = "";
@@ -7,7 +7,7 @@ function displayPages(pages) {
 <div id="page">
     <h1>${page.name}</h1>
     <b>${page.path}</b>
-        `;
+`;
         if (pages.subPages.length > 0) {
             displayPages(page.subPages);
         } else {
