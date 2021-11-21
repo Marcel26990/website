@@ -59,7 +59,7 @@ app.get("*", (req, res, next) => {
     }
 });
 
-app.use("assets", express.static(path.join(__dirname, "/assets")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use((req, res) => {
     res.status(404).send("404, Not found!");
