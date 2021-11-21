@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import files from 'fs';
 import path from 'path';
-import Page from './Page.js';
+import Page from './assets/js/Page.js';
 import exp from 'constants';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -44,11 +44,6 @@ app.get("*", (req, res, next) => {
     let url = req.originalUrl.split("/");
     url.shift();
     console.log(url);
-    
-    if (url[0] == "assets") {
-        express.static(path.join(__dirname, "assets"))
-        next();
-    }
     
     if (host.length > 2) {
         res.send("markregg.com");
